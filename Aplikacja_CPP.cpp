@@ -38,10 +38,37 @@ public:
 		cout << "TODO: zadanie ze wskaznikow\n";
 		//napisać ilustrację działania wskaźnika na int,
 		//tzn zaalokować wskaźnik, nadać mu wartość a potem zwolnić wskaźnik:
-		int *wskI = new(int);
-		*wskI = 7;
-		assert(*wskI == 7);
-		delete wskI;
+		{
+			int* wskI = new(int);
+			*wskI = 7;
+			assert(*wskI == 7);
+			delete wskI; 
+		}
+		
+		//napisać ilustrację operatora wskazania &:
+		{
+			int i = 7;
+			int* wskI = &i;
+			assert(*wskI == 7);
+		}
+		{
+			//zadanie: mając daną tablicę liczb policzyć ich sumę za
+			//pomocą wskaźników:
+			//TODO: wymyśleć sposób (alokacja dynamiczna za pomoca malloc)
+			//tablicy intów o zmiennej (losowej długości, powiedzmy od 3-100)
+			//i losowych elementach i przetestować sumy.
+			int tab[] = { 1,3,5,7,9,11 };
+			int sigma = 0;
+			for (auto el : tab) sigma += el;
+			cout << "Suma policzona klasycznie: " << sigma << endl;
+			int sigma2 = 0;
+			int* wskI = tab; //tak naprawdę w sposób jawny rzutowanie
+			// int [] do int* wyglądałoby tak: int* wskI = (int *)tab
+			for (int j = 0; j < sizeof(tab) / sizeof(tab[0]); j++) {
+				sigma2 += *(wskI++);
+			}
+			cout << "Suma policzona wskaznikami: " << sigma2 << endl;
+		}
 	}
 	static void przykladWirtualnosciMetody() {
 		class K1 {
@@ -84,6 +111,16 @@ co jest przy jej pierwszym pojawieniu się */
 		delete o3;
 
 	}
+	static void testKonstruktorowZParEnum() {
+		for (TRodzajWypelnieniaWektora wersja = TRodzajWypelnieniaWektora::start;
+			wersja < TRodzajWypelnieniaWektora::stop;
+			wersja = (TRodzajWypelnieniaWektora)((int)wersja + 1)) {
+			if (wersja == TRodzajWypelnieniaWektora::start) continue;
+			Lista* li = new Lista(wersja);
+			li->wypisanie();
+			delete li;
+		}
+	}
 };
 
 
@@ -109,23 +146,7 @@ int main()
 			Zadania::przykladWirtualnosciMetody();
 			break;
 		case '4': {
-			for (TRodzajWypelnieniaWektora wersja = TRodzajWypelnieniaWektora::start;
-				wersja < TRodzajWypelnieniaWektora::stop;
-				wersja = (TRodzajWypelnieniaWektora)((int)wersja + 1)) {
-				if (wersja == TRodzajWypelnieniaWektora::start) continue;
-				Lista* li = new Lista(wersja);
-				li->wypisanie();
-				delete li;
-			}
-/*			TRodzajWypelnieniaWektora wersja = TRodzajWypelnieniaWektora::liczby;
-			Lista* li = new Lista(wersja);
-			li->wypisanie();
-			delete li;
-
-			wersja = TRodzajWypelnieniaWektora::dniTygodnia;
-			li = new Lista(wersja);
-			li->wypisanie();
-			delete li;*/
+			Zadania::testKonstruktorowZParEnum();
 			break;
 		}
 		default:
