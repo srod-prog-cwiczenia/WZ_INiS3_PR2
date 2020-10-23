@@ -45,7 +45,8 @@ public:
 	}
 	static void przykladWirtualnosciMetody() {
 		class K1 {
-		public:
+		public: /*czy metoda jest wirtualna czy nie zależy od tego 
+co jest przy jej pierwszym pojawieniu się */
 			virtual int f(int p) {
 				return p;
 			};
@@ -62,11 +63,26 @@ public:
 				return p * p;
 			};
 		};
+		// zadanie: dopisać klasę K3, przesłonić metodę f, i sprawdzić
+		// czy za każdym razem trzeba pisać f jako wirtualną
+		class K3 : public K2 {
+		public:
+			int f(int p) {
+				return p * p * p;
+			}
+		};
 		cout << "Z powodu wirtualności metody ukazuje się lista kwadratów liczb:\n";
 		K2* o2 = new K2();
 		//((K1*)o2)->oblicz();
 		o2->oblicz();
 		delete o2;
+
+		cout << "Z powodu wirtualności metody ukazuje się lista sześcianów liczb:\n";
+		K3* o3 = new K3();
+		//((K1*)o3)->oblicz();
+		o3->oblicz();
+		delete o3;
+
 	}
 };
 
@@ -93,7 +109,15 @@ int main()
 			Zadania::przykladWirtualnosciMetody();
 			break;
 		case '4': {
-			TRodzajWypelnieniaWektora wersja = TRodzajWypelnieniaWektora::liczby;
+			for (TRodzajWypelnieniaWektora wersja = TRodzajWypelnieniaWektora::start;
+				wersja < TRodzajWypelnieniaWektora::stop;
+				wersja = (TRodzajWypelnieniaWektora)((int)wersja + 1)) {
+				if (wersja == TRodzajWypelnieniaWektora::start) continue;
+				Lista* li = new Lista(wersja);
+				li->wypisanie();
+				delete li;
+			}
+/*			TRodzajWypelnieniaWektora wersja = TRodzajWypelnieniaWektora::liczby;
 			Lista* li = new Lista(wersja);
 			li->wypisanie();
 			delete li;
@@ -101,7 +125,7 @@ int main()
 			wersja = TRodzajWypelnieniaWektora::dniTygodnia;
 			li = new Lista(wersja);
 			li->wypisanie();
-			delete li;
+			delete li;*/
 			break;
 		}
 		default:

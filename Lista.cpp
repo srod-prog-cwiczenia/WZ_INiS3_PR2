@@ -33,8 +33,13 @@ Lista::Lista(TRodzajWypelnieniaWektora wersja)
 			"Cz", "Pia", "So", "Nie"}) vec.push_back(txt);
 		break;
 	case TRodzajWypelnieniaWektora::zKlawiatury:
+		cout << "TODO: z klawiatury" << endl;
 		break;
 	case TRodzajWypelnieniaWektora::zPliku:
+		cout << "TODO: z pliku" << endl;
+		break;
+	default:
+		assert(!"Rodzaj wypelnienia nie moze byc start/stop.");
 		break;
 	}
 }
@@ -42,7 +47,6 @@ Lista::Lista(TRodzajWypelnieniaWektora wersja)
 Lista::~Lista()
 {
 }
-
 //string Lista::formatuj(string txt_p)
 string Lista::formatuj(const string &txt_p)
 {

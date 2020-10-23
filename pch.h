@@ -16,6 +16,6 @@
 #include <assert.h>
 using namespace std;
 enum class TRodzajWypelnieniaWektora {
-	liczby, dniTygodnia, zKlawiatury, zPliku
+	start, liczby, dniTygodnia, zKlawiatury, zPliku, stop
 };
 #endif //PCH_H
